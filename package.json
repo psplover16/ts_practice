@@ -1,0 +1,15 @@
+{
+    "name": "ts-practice",
+    "version": "1.0.0",
+    "description": "TypeScript 練習專案",
+    "scripts": {
+        "build": "tsc",
+        "start": "node dist/src/index.js",
+        "dev": "tsc && node dist/src/index.js",
+        "watch": "tsc --watch",
+        "watch-dist": "node --watch dist/src/index.js"
+    },
+    "devDependencies": {
+        "typescript": "^5.0.0"
+    }
+}

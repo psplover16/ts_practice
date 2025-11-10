@@ -1,0 +1,86 @@
+{
+  "compilerOptions": {
+    // === 基本編譯設定 ===
+    "target": "ES2020",                          // 編譯目標 JavaScript 版本 (ES5/ES2015/ES2020/ESNext)
+    "lib": ["ES2020", "DOM"],                    // 包含的內建 API 庫 (支援 Symbol, Promise, DOM 等)
+    "module": "commonjs",                        // 模組系統 (commonjs/es6/amd/umd)
+    
+    // === 輸出設定 ===
+    "outDir": "./dist",                          // 編譯後檔案輸出目錄
+    "rootDir": "./",                             // 原始碼根目錄 (設為當前目錄)
+    "sourceMap": false,                           // 產生 .map 檔案，方便除錯和開發
+    "declaration": false,                         // 產生 .d.ts 型別定義檔
+    "declarationMap": false,                      // 產生 .d.ts.map 檔案
+    "removeComments": false,                     // 是否移除註解 (保留註解方便閱讀)
+    
+    // === 嚴格型別檢查 ===
+    "strict": true,                              // 啟用所有嚴格檢查 (推薦)
+    "noImplicitAny": true,                       // 禁止隱含的 any 型別
+    "strictNullChecks": true,                    // 嚴格檢查 null 和 undefined
+    "strictFunctionTypes": true,                 // 嚴格檢查函數型別
+    "noImplicitReturns": true,                   // 函數所有路徑都必須有回傳值
+    "noImplicitThis": true,                      // 禁止隱含的 this 型別
+    "noUnusedLocals": true,                      // 禁止未使用的區域變數
+    "noUnusedParameters": true,                  // 禁止未使用的函數參數
+    "exactOptionalPropertyTypes": true,          // 可選屬性必須明確設為 undefined
+    
+    // === 模組解析 ===
+    "moduleResolution": "node",                  // 模組解析策略 (node/classic)
+    "baseUrl": "./",                             // 模組解析基準路徑
+    "paths": {                                   // 路徑映射 (類似 webpack alias)
+      "@/*": ["src/*"],                          // @/ 對應到 src/ 目錄
+      "@components/*": ["src/components/*"],     // 元件目錄別名
+      "@utils/*": ["src/utils/*"]                // 工具函數目錄別名
+    },
+    "resolveJsonModule": true,                   // 允許 import JSON 檔案
+    
+    // === ES6/CommonJS 互通性 ===
+    "esModuleInterop": true,                     // 改善 CommonJS 和 ES6 模組互通性
+    "allowSyntheticDefaultImports": true,        // 允許從沒有預設導出的模組預設導入
+    "isolatedModules": true,                     // 確保每個檔案都能獨立編譯 (Babel 相容)
+    
+    // === 實驗性功能 ===
+    "experimentalDecorators": true,              // 啟用實驗性裝飾器支援 (Angular/NestJS)
+    "emitDecoratorMetadata": true,               // 發出裝飾器元資料 (dependency injection)
+    
+    // === 型別檢查優化 ===
+    "skipLibCheck": true,                        // 跳過 .d.ts 檔案檢查 (加快編譯)
+    "forceConsistentCasingInFileNames": true,    // 強制檔案名稱大小寫一致
+    
+    // === JavaScript 支援 ===
+    "allowJs": false,                            // 是否允許編譯 JavaScript 檔案
+    "checkJs": false,                            // 是否檢查 JavaScript 檔案的型別錯誤
+    
+    // === 輸出控制 ===
+    "noEmit": false,                             // 只做型別檢查，不輸出檔案 (CI/CD 有用)
+    "noEmitOnError": true,                       // 有錯誤時不輸出檔案
+    "preserveConstEnums": true,                  // 保留 const enum (isolatedModules 需要為 true)
+    
+    // === 其他有用設定 ===
+    "pretty": true,                              // 美化錯誤訊息輸出
+    "incremental": true,                         // 啟用增量編譯 (加快重新編譯速度)
+    "tsBuildInfoFile": "./dist/.tsbuildinfo"     // 增量編譯資訊儲存位置
+  },
+  
+  // === 包含/排除檔案 ===
+  "include": [
+    "**/*.ts"                                    // 包含所有目錄的 .ts 檔案
+  ],
+  "exclude": [
+    "node_modules",                              // 排除 node_modules (預設已排除)
+    "dist",                                      // 排除輸出目錄
+    "**/*.test.ts",                              // 排除測試檔案
+    "**/*.spec.ts"                               // 排除規格檔案
+  ],
+  
+  // === 型別根目錄 ===
+  "typeRoots": [
+    "./node_modules/@types",                     // 預設型別定義位置
+    "./src/types"                                // 自訂型別定義目錄
+  ],
+  
+  // === 編譯時包含的型別 ===
+  "types": [
+    "node"                                       // 只包含 Node.js 型別 (排除瀏覽器型別)
+  ]
+}
