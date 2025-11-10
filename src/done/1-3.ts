@@ -1,3 +1,4 @@
+// interface - 主要用於物件結構
 // 介面,介面一般首字母大寫
 interface Person {
     readonly id: number; // 唯讀屬性，唯讀的約束存在於第一次給「物件」賦值的時候，而不是第一次給「唯讀屬性」賦值的時候
@@ -21,3 +22,11 @@ console.log(tom);
 tom.name = 'Jerry'; // 允許修改
 // tom.id = 9573; // ❌ 錯誤: 無法修改唯讀屬性
 console.log(tom);
+
+
+
+// type 定義任何型別
+type ApiResponse = string | number | { error: string };
+let response1: ApiResponse;
+let response2: ApiResponse;
+let response3: ApiResponse;

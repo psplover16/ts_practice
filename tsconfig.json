@@ -64,7 +64,8 @@
   
   // === 包含/排除檔案 ===
   "include": [
-    "**/*.ts"                                    // 包含所有目錄的 .ts 檔案
+    "src/index.ts",
+    // "**/*.ts"                                    // 包含所有目錄的 .ts 檔案
   ],
   "exclude": [
     "node_modules",                              // 排除 node_modules (預設已排除)
