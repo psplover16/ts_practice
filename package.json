@@ -10,6 +10,7 @@
         "watch-dist": "node --watch dist/src/index.js"
     },
     "devDependencies": {
+        "@types/node": "^24.10.0",
         "typescript": "^5.0.0"
     }
 }
