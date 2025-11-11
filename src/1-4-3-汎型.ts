@@ -58,6 +58,7 @@ const copied1 = cloneWithAny(user1);
 // copied1.xyz;  // ❌ 不會報錯,但執行時可能出問題
 
 // ✅ 使用泛型 (保持型別)
+// <T> 宣告一個泛型 T
 function cloneWithGeneric<T>(obj: T): T {
     return JSON.parse(JSON.stringify(obj));
 }
@@ -75,7 +76,8 @@ console.log('複製:', copied2);
 // ============================================
 // 4. 多個泛型參數
 // ============================================
-
+// 此處 [T,U] 表示回傳一個元組 (tuple)
+// 元組 = 固定長度、每個位置型別固定的陣列
 function pair<T, U>(first: T, second: U): [T, U] {
     return [first, second];
 }
@@ -90,10 +92,10 @@ console.log('pair(true, { x: 10 }):', p2);
 // ============================================
 // 5. 泛型介面
 // ============================================
-
+// 定義Box介面，包含泛型T
 interface Box<T> {
-    value: T;
-    getValue(): T;
+    value: T; // 儲存T型別的值
+    getValue(): T; // 回傳T型別的值
 }
 
 const numberBox: Box<number> = {
