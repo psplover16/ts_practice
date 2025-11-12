@@ -121,6 +121,9 @@ console.log('stringBox:', stringBox.getValue());
 // ============================================
 
 // 限制 T 必須有 length 屬性
+// 定義一個汎型T，T必須包含屬性length
+// item = T 型別的參數  
+// 回傳 = number
 function getLength<T extends { length: number }>(item: T): number {
     return item.length;
 }

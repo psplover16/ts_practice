@@ -2,7 +2,7 @@
   "compilerOptions": {
     // === 基本編譯設定 ===
     "target": "ES2020",                          // 編譯目標 JavaScript 版本 (ES5/ES2015/ES2020/ESNext)
-    "lib": ["ES2020", "DOM"],                    // 包含的內建 API 庫 (支援 Symbol, Promise, DOM 等)
+    "lib": ["ES2020", "DOM"],                    // 包含的內建 API 庫 (支援 Symbol, Promise, DOM 等) // 目前 JavaScript ES2020  以及 DOM 瀏覽器 API(window.localStorage, document 等,console.log())
     "module": "commonjs",                        // 模組系統 (commonjs/es6/amd/umd)
     
     // === 輸出設定 ===
@@ -66,7 +66,7 @@
   "include": [
     "src/index.ts",
     "src/index.d.ts",
-    // "**/*.ts"                                    // 包含所有目錄的 .ts 檔案
+    "lib-demo.ts"                                    // 暫時包含示範檔案
   ],
   "exclude": [
     "node_modules",                              // 排除 node_modules (預設已排除)
