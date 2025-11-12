@@ -1,77 +1,270 @@
-// https://willh.gitbook.io/typescript-tutorial/basics/declaration-files
+// ============================================
+// TypeScript 內建物件 (Built-in Objects)
+// ============================================
+// TypeScript 核心函式庫定義檔包含了所有瀏覽器環境需要用到的型別
+// 並且預置了所有內建物件的型別
+
+console.log('=== TypeScript 內建物件介紹 ===\n');
 
 // ============================================
-// 步驟 1: 建立全域變數和函數 (模擬外部載入)
+// 1. ECMAScript 標準內建物件
 // ============================================
 
-// 建立 APP_CONFIG
-(globalThis as any).APP_CONFIG = {
-    apiUrl: 'https://api.example.com',
-    version: '1.0.0'
-};
+// Boolean
+const isDone: Boolean = new Boolean(true);
+const isActive: boolean = false; // 推薦用小寫 boolean (基本型別)
+console.log('1. Boolean:', isDone, isActive);
 
-// 建立 greet 函數
-(globalThis as any).greet = function(name: string, age?: number): string {
-    return age ? `${name}, ${age}歲` : `你好, ${name}`;
-};
+// Number
+const decimal: Number = new Number(6);
+const pi: number = 3.14159; // 推薦用小寫 number
+console.log('2. Number:', decimal, pi);
 
-// 建立 MyLib 命名空間
-(globalThis as any).MyLib = {
-    VERSION: '2.0.0',
-    init: function() {
-        console.log('MyLib 已初始化');
+// String
+const greeting: String = new String('Hello');
+const userName: string = 'TypeScript'; // 推薦用小寫 string
+console.log('3. String:', greeting, userName);
+
+// Date - 日期物件
+const today: Date = new Date();
+const birthday: Date = new Date('2000-01-01');
+console.log('4. Date:', today.toLocaleDateString(), birthday.getFullYear());
+
+// RegExp - 正則表達式
+const pattern: RegExp = /[a-z]+/g;
+const pattern2: RegExp = new RegExp('[0-9]+', 'i');
+console.log('5. RegExp:', pattern.test('hello'), pattern2.source);
+
+// Error - 錯誤物件
+const error: Error = new Error('Something went wrong');
+console.log('6. Error:', error.message);
+
+// ============================================
+// 2. Array 相關
+// ============================================
+
+// 陣列的多種寫法
+const numbers: number[] = [1, 2, 3, 4, 5];
+const strings: Array<string> = ['a', 'b', 'c'];
+const mixed: (number | string)[] = [1, 'two', 3];
+
+console.log('\n=== Array 陣列 ===');
+console.log('numbers:', numbers);
+console.log('mapped:', numbers.map(n => n * 2));
+console.log('filtered:', numbers.filter(n => n > 2));
+console.log('reduced:', numbers.reduce((sum, n) => sum + n, 0));
+
+// ============================================
+// 3. Promise - 非同步操作
+// ============================================
+
+console.log('\n=== Promise 非同步 ===');
+
+// Promise<T> 泛型，T 是 resolve 的值型別
+const promise1: Promise<number> = new Promise((resolve) => {
+    setTimeout(() => resolve(42), 100);
+});
+
+promise1.then((value: number) => {
+    console.log('Promise resolved:', value);
+});
+
+// async/await
+async function fetchData(): Promise<string> {
+    return 'Data loaded';
+}
+
+fetchData().then(data => console.log('Async result:', data));
+
+// ============================================
+// 4. Map 和 Set - ES6 集合
+// ============================================
+
+console.log('\n=== Map & Set ===');
+
+// Map<K, V> - 鍵值對集合
+const userMap: Map<number, string> = new Map();
+userMap.set(1, 'Alice');
+userMap.set(2, 'Bob');
+console.log('Map size:', userMap.size);
+console.log('Get key 1:', userMap.get(1));
+
+// Set<T> - 唯一值集合
+const uniqueNumbers: Set<number> = new Set([1, 2, 2, 3, 3, 4]);
+console.log('Set (去重後):', Array.from(uniqueNumbers)); // [1, 2, 3, 4]
+
+// ============================================
+// 5. Symbol - ES6 唯一識別符
+// ============================================
+
+const sym1: symbol = Symbol('key1');
+const sym2: symbol = Symbol('key1');
+console.log('\n=== Symbol ===');
+console.log('Symbol 相等?', sym1 === sym2); // false，每個都是唯一的
+
+// ============================================
+// 6. JSON - 資料序列化
+// ============================================
+
+console.log('\n=== JSON ===');
+
+interface User {
+    name: string;
+    age: number;
+}
+
+const user: User = { name: 'Gary', age: 30 };
+const jsonString: string = JSON.stringify(user);
+console.log('JSON.stringify:', jsonString);
+
+const parsedUser: User = JSON.parse(jsonString);
+console.log('JSON.parse:', parsedUser);
+
+// ============================================
+// 7. Math - 數學運算
+// ============================================
+
+console.log('\n=== Math 數學 ===');
+console.log('Math.PI:', Math.PI);
+console.log('Math.random():', Math.random());
+console.log('Math.max(1,5,3):', Math.max(1, 5, 3));
+console.log('Math.round(4.7):', Math.round(4.7));
+console.log('Math.floor(4.7):', Math.floor(4.7));
+console.log('Math.ceil(4.1):', Math.ceil(4.1));
+
+// ============================================
+// 8. Object 物件操作
+// ============================================
+
+console.log('\n=== Object 操作 ===');
+
+const obj = { a: 1, b: 2, c: 3 };
+console.log('Object.keys:', Object.keys(obj));
+console.log('Object.values:', Object.values(obj));
+console.log('Object.entries:', Object.entries(obj));
+
+const copy = Object.assign({}, obj, { d: 4 });
+console.log('Object.assign:', copy);
+
+// ============================================
+// 9. WeakMap 和 WeakSet - 弱引用集合
+// ============================================
+
+console.log('\n=== WeakMap & WeakSet ===');
+
+// WeakMap - 鍵必須是物件，不會阻止垃圾回收
+const weakMap: WeakMap<object, string> = new WeakMap();
+const key = { id: 1 };
+weakMap.set(key, 'value');
+console.log('WeakMap get:', weakMap.get(key));
+
+// WeakSet - 只能存物件
+const weakSet: WeakSet<object> = new WeakSet();
+weakSet.add(key);
+console.log('WeakSet has:', weakSet.has(key));
+
+// ============================================
+// 10. ArrayBuffer 和 TypedArray - 二進位資料
+// ============================================
+
+console.log('\n=== ArrayBuffer & TypedArray ===');
+
+// ArrayBuffer - 固定長度的原始二進位資料緩衝區
+const buffer: ArrayBuffer = new ArrayBuffer(16); // 16 bytes
+console.log('Buffer byteLength:', buffer.byteLength);
+
+// Int32Array - 32位元整數陣列
+const int32View: Int32Array = new Int32Array(buffer);
+int32View[0] = 42;
+console.log('Int32Array[0]:', int32View[0]);
+
+// Uint8Array - 8位元無號整數陣列 (常用於處理二進位資料)
+const uint8View: Uint8Array = new Uint8Array(buffer);
+console.log('Uint8Array length:', uint8View.length);
+
+// ============================================
+// 11. Proxy 和 Reflect - 元編程
+// ============================================
+
+console.log('\n=== Proxy & Reflect ===');
+
+const target = { name: 'Original' };
+const handler = {
+    get(obj: any, prop: string) {
+        console.log(`  存取屬性: ${prop}`);
+        return prop in obj ? obj[prop] : 'Not found';
     }
 };
 
-// ============================================
-// 步驟 2: 使用宣告的全域變數 (TS 從 index.d.ts 知道型別)
-// ============================================
-// interface GlobalThis {
-//     Array: typeof Array;
-//     Object: typeof Object;
-//     // ... 只有內建的屬性
-//     // 沒有你自己加的 greet, APP_CONFIG 等
-// }
-// 所以要加any
-const APP_CONFIG = (<any>globalThis).APP_CONFIG;
-const greet = (globalThis as any).greet;
-const MyLib = (globalThis as any).MyLib;
+const proxy: any = new Proxy(target, handler);
+console.log('Proxy result:', proxy.name);
+console.log('Proxy result:', proxy.age);
+
+// Reflect - 提供攔截 JS 操作的方法
+console.log('Reflect.has:', Reflect.has(target, 'name'));
 
 // ============================================
-// 測試
+// 12. Intl - 國際化 API
 // ============================================
 
-console.log('1. APP_CONFIG:', APP_CONFIG.apiUrl);
-console.log('2. greet:', greet('小明', 25));
-console.log('3. MyLib:', MyLib.VERSION);
-MyLib.init();
+console.log('\n=== Intl 國際化 ===');
 
-// 內建屬性 - TypeScript 知道，所以不需要any
-console.log('\n--- 存取 GlobalThis 內建屬性 ---');
-console.log('globalThis.Array:', globalThis.Array);
-console.log(Array); // 直接使用也可以
-// console.log(window.Array);  // 瀏覽器環境下也可以
-console.log(global.Array); // 也等同於 (Node.js)
-console.log('globalThis.Object:', globalThis.Object);
-console.log('globalThis.String:', globalThis.String);
-console.log('globalThis.Math:', globalThis.Math);
+// 日期格式化
+const dateFormatter = new Intl.DateTimeFormat('zh-TW', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+});
+console.log('日期格式:', dateFormatter.format(new Date()));
 
-// 使用內建的構造函數
-const arr = new globalThis.Array(1, 2, 3);
-console.log('建立陣列:', arr);
-
-const obj = new globalThis.Object({ name: '測試' });
-console.log('建立物件:', obj);
+// 數字格式化
+const numberFormatter = new Intl.NumberFormat('zh-TW', {
+    style: 'currency',
+    currency: 'TWD'
+});
+console.log('貨幣格式:', numberFormatter.format(12345.67));
 
 // ============================================
-// index.d.ts 測試說明
+// 13. 型別斷言與內建物件
 // ============================================
-console.log('\n--- index.d.ts 的作用 ---');
-console.log('✅ 上面的 APP_CONFIG, greet, MyLib 都能有型別提示');
-console.log('✅ 因為 index.d.ts 宣告了它們的型別');
-console.log('✅ @types/jquery 也提供了 jQuery 的型別（但在 Node.js 無法實際執行）');
-console.log('\n重點: .d.ts 只提供型別，不提供執行碼！');
 
+console.log('\n=== 型別斷言 ===');
 
-// 要看 防止命名衝突
-https://willh.gitbook.io/typescript-tutorial/basics/declaration-files#interface-he-type
+// 當需要更精確的型別時
+const someValue: any = 'this is a string';
+const strLength1: number = (someValue as string).length;
+const strLength2: number = (<string>someValue).length; // JSX 中不可用
+console.log('String length:', strLength1, strLength2);
+
+// ============================================
+// 重點提醒
+// ============================================
+
+console.log('\n=== 重點提醒 ===');
+console.log('✅ 優先使用小寫基本型別: string, number, boolean');
+console.log('✅ 大寫物件型別用於物件包裝: String, Number, Boolean (較少用)');
+console.log('✅ TypeScript 會自動推斷大部分型別');
+console.log('✅ 內建物件都有完整的型別定義在 lib.d.ts');
+console.log('✅ 可用 lib 選項控制要載入哪些內建型別定義');
+
+// ============================================
+// tsconfig.json 的 lib 設定範例
+// ============================================
+/*
+{
+  "compilerOptions": {
+    "lib": [
+      "ES2020",        // ECMAScript 2020 功能
+      "DOM",           // 瀏覽器 DOM API
+      "DOM.Iterable",  // DOM 集合的迭代器
+      "WebWorker"      // Web Worker API (可選)
+    ]
+  }
+}
+*/
+
+// DOM 和 BOM 提供的內建物件有：
+// Document、HTMLElement、Event、NodeList 等。
+// let body: HTMLElement = document.body;
+// let allDiv: NodeList = document.querySelectorAll('div');
+// console.log(body)

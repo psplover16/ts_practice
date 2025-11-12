@@ -1,3 +1,5 @@
+//  Node.js 不是內建物件的一部分，如果想用 TypeScript 寫 Node.js，則需要引入第三方宣告檔案
+
 // 原始資料型別包括：boolean (布林值)、number (數值)、string (字串)、null、undefined 以及 ES6 中的新型別 Symbol。
 
 // 1. boolean (布林值)

@@ -10,7 +10,11 @@
         "watch-dist": "node --watch dist/src/index.js"
     },
     "devDependencies": {
+        "@types/jquery": "^3.5.33",
         "@types/node": "^24.10.0",
         "typescript": "^5.0.0"
+    },
+    "dependencies": {
+        "jquery": "^3.7.1"
     }
 }

@@ -1,24 +1,28 @@
-"use strict";
 // https://willh.gitbook.io/typescript-tutorial/basics/declaration-files
+
 // ============================================
 // 步驟 1: 建立全域變數和函數 (模擬外部載入)
 // ============================================
+
 // 建立 APP_CONFIG
-globalThis.APP_CONFIG = {
+(globalThis as any).APP_CONFIG = {
     apiUrl: 'https://api.example.com',
     version: '1.0.0'
 };
+
 // 建立 greet 函數
-globalThis.greet = function (name, age) {
+(globalThis as any).greet = function(name: string, age?: number): string {
     return age ? `${name}, ${age}歲` : `你好, ${name}`;
 };
+
 // 建立 MyLib 命名空間
-globalThis.MyLib = {
+(globalThis as any).MyLib = {
     VERSION: '2.0.0',
-    init: function () {
+    init: function() {
         console.log('MyLib 已初始化');
     }
 };
+
 // ============================================
 // 步驟 2: 使用宣告的全域變數 (TS 從 index.d.ts 知道型別)
 // ============================================
@@ -29,16 +33,19 @@ globalThis.MyLib = {
 //     // 沒有你自己加的 greet, APP_CONFIG 等
 // }
 // 所以要加any
-const APP_CONFIG = globalThis.APP_CONFIG;
-const greet = globalThis.greet;
-const MyLib = globalThis.MyLib;
+const APP_CONFIG = (<any>globalThis).APP_CONFIG;
+const greet = (globalThis as any).greet;
+const MyLib = (globalThis as any).MyLib;
+
 // ============================================
 // 測試
 // ============================================
+
 console.log('1. APP_CONFIG:', APP_CONFIG.apiUrl);
 console.log('2. greet:', greet('小明', 25));
 console.log('3. MyLib:', MyLib.VERSION);
 MyLib.init();
+
 // 內建屬性 - TypeScript 知道，所以不需要any
 console.log('\n--- 存取 GlobalThis 內建屬性 ---');
 console.log('globalThis.Array:', globalThis.Array);
@@ -48,8 +55,23 @@ console.log(global.Array); // 也等同於 (Node.js)
 console.log('globalThis.Object:', globalThis.Object);
 console.log('globalThis.String:', globalThis.String);
 console.log('globalThis.Math:', globalThis.Math);
+
 // 使用內建的構造函數
 const arr = new globalThis.Array(1, 2, 3);
 console.log('建立陣列:', arr);
+
 const obj = new globalThis.Object({ name: '測試' });
 console.log('建立物件:', obj);
+
+// ============================================
+// index.d.ts 測試說明
+// ============================================
+console.log('\n--- index.d.ts 的作用 ---');
+console.log('✅ 上面的 APP_CONFIG, greet, MyLib 都能有型別提示');
+console.log('✅ 因為 index.d.ts 宣告了它們的型別');
+console.log('✅ @types/jquery 也提供了 jQuery 的型別（但在 Node.js 無法實際執行）');
+console.log('\n重點: .d.ts 只提供型別，不提供執行碼！');
+
+
+// 要看 防止命名衝突
+https://willh.gitbook.io/typescript-tutorial/basics/declaration-files#interface-he-type
