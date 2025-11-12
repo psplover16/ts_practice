@@ -62,3 +62,16 @@ console.log('建立陣列:', arr);
 
 const obj = new globalThis.Object({ name: '測試' });
 console.log('建立物件:', obj);
+
+// ============================================
+// index.d.ts 測試說明
+// ============================================
+console.log('\n--- index.d.ts 的作用 ---');
+console.log('✅ 上面的 APP_CONFIG, greet, MyLib 都能有型別提示');
+console.log('✅ 因為 index.d.ts 宣告了它們的型別');
+console.log('✅ @types/jquery 也提供了 jQuery 的型別（但在 Node.js 無法實際執行）');
+console.log('\n重點: .d.ts 只提供型別，不提供執行碼！');
+
+
+// 要看 防止命名衝突
+https://willh.gitbook.io/typescript-tutorial/basics/declaration-files#interface-he-type
