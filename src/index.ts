@@ -11,19 +11,19 @@ console.log('=== TypeScript 內建物件介紹 ===\n');
 // ============================================
 
 // Boolean
-const isDone: Boolean = new Boolean(true);
+const isDone: Boolean = new Boolean(true); // 使用大寫 Boolean (物件) 型別
 const isActive: boolean = false; // 推薦用小寫 boolean (基本型別)
-console.log('1. Boolean:', isDone, isActive);
+console.log('1. Boolean:', isDone.valueOf(), isActive);
 
 // Number
 const decimal: Number = new Number(6);
 const pi: number = 3.14159; // 推薦用小寫 number
-console.log('2. Number:', decimal, pi);
+console.log('2. Number:', decimal.valueOf(), pi);
 
 // String
 const greeting: String = new String('Hello');
 const userName: string = 'TypeScript'; // 推薦用小寫 string
-console.log('3. String:', greeting, userName);
+console.log('3. String:', greeting.valueOf(), userName);
 
 // Date - 日期物件
 const today: Date = new Date();
@@ -73,7 +73,9 @@ promise1.then((value: number) => {
 async function fetchData(): Promise<string> {
     return 'Data loaded';
 }
-
+// function fetchData(): Promise<string> {
+//     return Promise.resolve('Data loaded');  // 自動包成 Promise
+// }
 fetchData().then(data => console.log('Async result:', data));
 
 // ============================================
@@ -82,15 +84,17 @@ fetchData().then(data => console.log('Async result:', data));
 
 console.log('\n=== Map & Set ===');
 
-// Map<K, V> - 鍵值對集合
+// Map<K, V> - 鍵值對集合，會有記憶體洩漏的問題，不會主動清除垃圾
 const userMap: Map<number, string> = new Map();
 userMap.set(1, 'Alice');
 userMap.set(2, 'Bob');
-console.log('Map size:', userMap.size);
-console.log('Get key 1:', userMap.get(1));
+console.log('Map size:', userMap.size); // 2
+console.log('Get key 1:', userMap.get(1)); // Alice
 
 // Set<T> - 唯一值集合
 const uniqueNumbers: Set<number> = new Set([1, 2, 2, 3, 3, 4]);
+uniqueNumbers.add(4); // 已存在，不會重複加入
+console.log(typeof uniqueNumbers); // object,uniqueNumbers = {1,2,3,4}
 console.log('Set (去重後):', Array.from(uniqueNumbers)); // [1, 2, 3, 4]
 
 // ============================================
@@ -115,9 +119,11 @@ interface User {
 
 const user: User = { name: 'Gary', age: 30 };
 const jsonString: string = JSON.stringify(user);
-console.log('JSON.stringify:', jsonString);
+console.log(typeof jsonString); // string
+console.log('JSON.stringify:', jsonString); // {"name":"Gary","age":30}
 
 const parsedUser: User = JSON.parse(jsonString);
+console.log(typeof parsedUser); // object
 console.log('JSON.parse:', parsedUser);
 
 // ============================================
@@ -141,10 +147,10 @@ console.log('\n=== Object 操作 ===');
 const obj = { a: 1, b: 2, c: 3 };
 console.log('Object.keys:', Object.keys(obj));
 console.log('Object.values:', Object.values(obj));
-console.log('Object.entries:', Object.entries(obj));
+console.log('Object.entries:', Object.entries(obj)); // 意思是將物件轉成鍵值對陣列
 
-const copy = Object.assign({}, obj, { d: 4 });
-console.log('Object.assign:', copy);
+const copy = Object.assign({}, obj, { d: 4 }); // 創建一個空物件，淺複製 obj 並新增 d 屬性，若d已存在則覆蓋
+console.log('Object.assign:', copy); // 
 
 // ============================================
 // 9. WeakMap 和 WeakSet - 弱引用集合
@@ -152,15 +158,20 @@ console.log('Object.assign:', copy);
 
 console.log('\n=== WeakMap & WeakSet ===');
 
-// WeakMap - 鍵必須是物件，不會阻止垃圾回收
+// WeakMap - 鍵必須是物件，不會阻止垃圾回收~記憶體自動釋放
+// 無法知道有幾個項目
+// 無法跌代，只能查詢特定的鍵
 const weakMap: WeakMap<object, string> = new WeakMap();
 const key = { id: 1 };
 weakMap.set(key, 'value');
+weakMap.has(key);           // 檢查 → true
+// weakMap.delete(key);        // 刪除 → true
 console.log('WeakMap get:', weakMap.get(key));
 
 // WeakSet - 只能存物件
 const weakSet: WeakSet<object> = new WeakSet();
 weakSet.add(key);
+// weakSet.delete(key);  // 刪除 → true
 console.log('WeakSet has:', weakSet.has(key));
 
 // ============================================
