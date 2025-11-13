@@ -2,11 +2,9 @@
 node_modules/
 
 # 編譯輸出
-dist/
+dist/*
 *.js
 *.js.map
-*.d.ts
-*.d.ts.map
 
 # TypeScript 快取
 *.tsbuildinfo
